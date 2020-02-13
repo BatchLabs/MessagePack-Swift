@@ -1,0 +1,152 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build",
+            "type": "shell",
+            "command": "bash scripts/build.sh",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": {
+                "owner": "swift",
+                "fileLocation": [
+                    "absolute"
+                ],
+                "pattern": {
+                    "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "column": 3,
+                    "severity": 4,
+                    "message": 5
+                }
+            }
+        },
+        {
+            "label": "Build - Tests",
+            "type": "shell",
+            "command": "bash",
+            "args": [
+                "scripts/build.sh",
+                "--build-tests"
+            ],
+            "group": "build",
+            "problemMatcher": {
+                "owner": "swift",
+                "fileLocation": [
+                    "absolute"
+                ],
+                "pattern": {
+                    "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "column": 3,
+                    "severity": 4,
+                    "message": 5
+                }
+            }
+        },
+        {
+            "label": "Build - Generate Linux test list",
+            "type": "shell",
+            "command": "bash",
+            "args": [
+                "scripts/test-generate-linuxmain.sh"
+            ],
+            "group": "build",
+            "problemMatcher": []
+        },
+        {
+            "label": "Lint - Everything",
+            "type": "shell",
+            "command": "bash scripts/lint.sh",
+            "problemMatcher": {
+                "owner": "swift-lint",
+                "fileLocation": [
+                    "absolute"
+                ],
+                "pattern": {
+                    "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "column": 3,
+                    "severity": 4,
+                    "message": 5
+                }
+            }
+        },
+        {
+            "label": "Lint - This file only",
+            "type": "shell",
+            "command": "bash",
+            "args": [
+                "scripts/lint.sh",
+                "--use-script-input-files"
+            ],
+            "options": {
+                "env": {
+                    "SCRIPT_INPUT_FILE_COUNT": "1",
+                    "SCRIPT_INPUT_FILE_0": "${file}"
+                }
+            },
+            "problemMatcher": {
+                "owner": "swift-lint",
+                "fileLocation": [
+                    "absolute"
+                ],
+                "pattern": {
+                    "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "column": 3,
+                    "severity": 4,
+                    "message": 5
+                }
+            }
+        },
+        {
+            "label": "Format - This file only",
+            "type": "shell",
+            "command": "bash",
+            "args": [
+                "scripts/format-current.sh",
+                "${file}"
+            ]
+        },
+        {
+            "label": "Format - All",
+            "type": "shell",
+            "command": "bash",
+            "args": [
+                "scripts/format-all.sh"
+            ]
+        },
+        {
+            "label": "Run - Tests",
+            "type": "shell",
+            "command": "bash",
+            "args": [
+                "scripts/test.sh"
+            ],
+            "group": "build",
+            "problemMatcher": {
+                "owner": "swift",
+                "fileLocation": [
+                    "absolute"
+                ],
+                "pattern": {
+                    "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "column": 3,
+                    "severity": 4,
+                    "message": 5
+                }
+            }
+        },
+    ]
+}

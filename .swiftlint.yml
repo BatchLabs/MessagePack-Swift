@@ -1,0 +1,13 @@
+included:
+    - Sources
+    - Tests
+
+excluded:
+    - Tests/MessagePackTests/XCTestManifests.swift
+
+disabled_rules:
+    - switch_case_alignment
+    - trailing_comma
+
+cyclomatic_complexity:
+  ignores_case_statements: true
