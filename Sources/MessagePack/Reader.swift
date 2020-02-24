@@ -450,7 +450,9 @@ public extension MessagePackReader {
     mutating func readAny() throws -> Any? {
         let type = try MessagePackType.from(stream.peekByte())
         switch type {
-            case .nil: return nil
+            case .nil:
+                stream.skipByte()
+                return nil
             case let .boolean(value):
                 stream.skipByte()
                 return value

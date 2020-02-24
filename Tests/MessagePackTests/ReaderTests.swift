@@ -69,6 +69,7 @@ final class ReaderTests: XCTestCase {
     func testArray() throws {
         assertUnpack("90", []) { try $0.readArray() as! [Int64?] }
         assertUnpack("91C0", [nil]) { try $0.readArray() as! [Int64?] }
+        assertUnpack("92C002", [nil, 2]) { try $0.readArray() as! [Int64?] }
         assertUnpack("9102", [2]) { try $0.readArray() as! [Int64] }
         assertUnpack("920202", [2, 2]) { try $0.readArray() as! [Int64] }
         assertUnpack("91A3666F6F", ["foo"]) { try $0.readArray() as! [String] }
