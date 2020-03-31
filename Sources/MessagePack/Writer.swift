@@ -38,7 +38,10 @@ extension MessagePackWriter {
     @inlinable
     internal mutating func write<T: FixedWidthInteger>(integer: T) {
         var bigEndianInteger = integer.bigEndian
-        _data.append(UnsafeBufferPointer(start: &bigEndianInteger, count: 1))
+        withUnsafeBytes(of: &bigEndianInteger) {
+            let buffer = $0.bindMemory(to: T.self)
+            _data.append(buffer)
+        }
     }
 }
 
@@ -185,7 +188,10 @@ public extension MessagePackWriter {
     mutating func pack(_ value: Double) {
         _data.append(MessagePackType.float64.headerValue)
         var bigEndianBitPattern = value.bitPattern.bigEndian
-        _data.append(UnsafeBufferPointer(start: &bigEndianBitPattern, count: 1))
+        withUnsafeBytes(of: &bigEndianBitPattern) {
+            let buffer = $0.bindMemory(to: Double.self)
+            _data.append(buffer)
+        }
     }
 
     /// Pack a double. Also known as float32.
@@ -194,7 +200,10 @@ public extension MessagePackWriter {
     mutating func pack(_ value: Float) {
         _data.append(MessagePackType.float32.headerValue)
         var bigEndianBitPattern = value.bitPattern.bigEndian
-        _data.append(UnsafeBufferPointer(start: &bigEndianBitPattern, count: 1))
+        withUnsafeBytes(of: &bigEndianBitPattern) {
+            let buffer = $0.bindMemory(to: Float.self)
+            _data.append(buffer)
+        }
     }
 
     /// Pack a String.

@@ -71,7 +71,10 @@ final class DataStreamTests: XCTestCase {
     func makeReader<T: FixedWidthInteger>(forInteger integer: T) -> DataStreamReader {
         var bigEndianInteger = integer.bigEndian
         var data = Data()
-        data.append(UnsafeBufferPointer(start: &bigEndianInteger, count: 1))
+        withUnsafeBytes(of: &bigEndianInteger) {
+            let buffer = $0.bindMemory(to: T.self)
+            data.append(buffer)
+        }
         return DataStreamReader(from: data)
     }
 }
