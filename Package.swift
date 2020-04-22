@@ -14,11 +14,6 @@ let package = Package(
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         // .package(url: /* package url */, from: "1.0.0"),
-
-        // Dev dependencies
-        // Install these locally so we can use "swift run <tool>"
-        .package(url: "https://github.com/nicklockwood/SwiftFormat", from: "0.44.1"),
-        .package(url: "https://github.com/Realm/SwiftLint", .branch("master")), // TODO: switch to a tag once #2867 is fixed
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
