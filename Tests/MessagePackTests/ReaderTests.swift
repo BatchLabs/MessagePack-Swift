@@ -68,9 +68,12 @@ final class ReaderTests: XCTestCase {
 
     func testArray() throws {
         assertUnpack("90", []) { try $0.readArray() as! [Int64?] }
+        assertUnpack("91C3", [true]) { try $0.readArray() as! [Bool] }
         assertUnpack("91C0", [nil]) { try $0.readArray() as! [Int64?] }
         assertUnpack("92C002", [nil, 2]) { try $0.readArray() as! [Int64?] }
         assertUnpack("9102", [2]) { try $0.readArray() as! [Int64] }
+        assertUnpack("91810203", [[2: 3]]) { try $0.readArray() as! [[Int64 : Int64]] }
+        assertUnpack("919102", [[2]]) { try $0.readArray() as! [[Int64]] }
         assertUnpack("920202", [2, 2]) { try $0.readArray() as! [Int64] }
         assertUnpack("91A3666F6F", ["foo"]) { try $0.readArray() as! [String] }
     }
@@ -86,6 +89,8 @@ final class ReaderTests: XCTestCase {
         assertUnpack("81A3666F6FA3626172", ["foo": "bar"]) { try $0.readDictionary() as! [AnyHashable: String] }
         assertUnpack("81A3666F6FC0", ["foo": nil]) { try $0.readDictionary() as! [AnyHashable: String?] }
         assertUnpack("810203", [2: 3]) { try $0.readDictionary() as! [AnyHashable: Int64] }
+        assertUnpack("8102810203", [2: [2: 3]]) { try $0.readDictionary() as! [Int64 : [Int64 : Int64]] }
+        assertUnpack("81029103", [2: [3]]) { try $0.readDictionary() as! [Int64 : [Int64]] }
         // We can't test dicts with multiple keys easily as the order is not guaranteed in swift
     }
 

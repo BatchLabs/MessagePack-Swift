@@ -61,9 +61,15 @@ final class WriterTests: XCTestCase {
     }
 
     func testWriteArray() throws {
+        try assertPack("C0") {
+            let array: [String]? = nil
+            try $0.pack(array)
+        }
         try assertPack("90") { try $0.pack([]) }
         try assertPack("91C0") { try $0.pack([nil]) }
         try assertPack("9102") { try $0.pack([2]) }
+        try assertPack("91810203") { try $0.pack([[2: 3]]) }
+        try assertPack("919102") { try $0.pack([[2]]) }
         try assertPack("920202") { try $0.pack([2, 2]) }
         try assertPack("91A3666F6F") { try $0.pack(["foo"]) }
     }
@@ -75,10 +81,16 @@ final class WriterTests: XCTestCase {
     }
 
     func testWriteMap() throws {
+        try assertPack("C0") {
+            let dict: [String: String]? = nil
+            try $0.pack(dict)
+        }
         try assertPack("80") { try $0.pack([:]) }
         try assertPack("81A3666F6FA3626172") { try $0.pack(["foo": "bar"]) }
         try assertPack("81A3666F6FC0") { try $0.pack(["foo": nil]) }
         try assertPack("810203") { try $0.pack([2: 3]) }
+        try assertPack("8102810203") { try $0.pack([2: [2: 3]]) }
+        try assertPack("81029103") { try $0.pack([2: [3]]) }
         // We can't test dicts with multiple keys easily as the order is not guaranteed in swift
     }
 
